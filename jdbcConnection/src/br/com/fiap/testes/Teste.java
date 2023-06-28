@@ -1,7 +1,10 @@
-package jdbcConnection;
+package br.com.fiap.testes;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import br.com.fiap.model.Usuario;
+import br.com.fiap.repository.UsuarioDAO;
 
 public class Teste {
 
@@ -13,7 +16,7 @@ public class Teste {
 		Usuario joao = new Usuario ("Joao", "ABC123");
 		Usuario guilherme = new Usuario ("Guilherme","ABC123");
 
-		dao.insert(guilherme);
+		//dao.insert(guilherme);
 		//dao.insert(matheus);
 		//dao.insert(henrique);
 		// dao.insert(joao);
@@ -48,6 +51,12 @@ public class Teste {
 			System.out.println("Nome: "+ usuario.getNome());
 			System.out.println("Data de Cadastro: "+ usuario.getDataCadastro());
 		}
+		
+		Usuario usuario = dao.selectById(4);
+		usuario.setNome("Matheus Munhos");
+		usuario.setSenha("Ma170507");
+		
+		dao.update(usuario);
 		
 		
 		
