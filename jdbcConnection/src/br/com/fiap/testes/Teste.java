@@ -1,5 +1,6 @@
 package br.com.fiap.testes;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,13 +9,13 @@ import br.com.fiap.repository.UsuarioDAO;
 
 public class Teste {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 
 		UsuarioDAO dao = new UsuarioDAO();
-		Usuario matheus = new Usuario("Matheus", "ABC123");
-		Usuario henrique = new Usuario("Henrique", "ABC123");
-		Usuario joao = new Usuario ("Joao", "ABC123");
-		Usuario guilherme = new Usuario ("Guilherme","ABC123");
+		Usuario matheus = new Usuario("Matheus","matheus@gmail", "ABC123");
+		Usuario henrique = new Usuario("Henrique","henrique@gmail", "ABC123");
+		Usuario joao = new Usuario ("Joao","joao@gmail", "ABC123");
+		Usuario guilherme = new Usuario ("Guilherme","gmail","ABC123");
 
 		//dao.insert(guilherme);
 		//dao.insert(matheus);
@@ -53,10 +54,14 @@ public class Teste {
 		}
 		
 		Usuario usuario = dao.selectById(4);
-		usuario.setNome("Matheus Munhos");
-		usuario.setSenha("Ma170507");
+		usuario.setNome("Matheus Munhos Souza");
+		usuario.setSenha("ABC1219256");
 		
 		dao.update(usuario);
+		
+
+		
+		
 		
 		
 		

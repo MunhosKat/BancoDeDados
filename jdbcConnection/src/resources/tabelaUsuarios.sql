@@ -5,8 +5,9 @@ DROP TABLE usuarios;
 CREATE TABLE usuarios (
   id integer PRIMARY KEY NOT NULL,
   nome varchar(45) NOT NULL,
+  email varchar(200) NOT NULL,
   senha varchar(45) NOT NULL,
-  dataCadastro Date NOT NULL
+  data Date NOT NULL
 );
 
 CREATE SEQUENCE usuarios_sequence START WITH 1 INCREMENT BY 1;

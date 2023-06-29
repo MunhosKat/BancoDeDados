@@ -14,33 +14,25 @@ public class UsuarioDAO {
 
 	private Connection conexao;
 
-	public UsuarioDAO() {
-
-		this.conexao = new ConnectionFactory().conectar();
+	public UsuarioDAO() throws SQLException {
+		this.conexao = ConnectionFactory.conectar();
 	}
 
-	// insert
 	public void insert(Usuario usuario) {
-		String sql = "insert into usuarios (nome, senha, dataCadastro) values (?,?,?)";
-
+		String sql = "insert into usuarios(nome, email, senha, data) values (?,?,?,?)";
 		try {
 			PreparedStatement stmt = conexao.prepareStatement(sql);
-
 			stmt.setString(1, usuario.getNome());
-			stmt.setString(2, usuario.getSenha());
-			stmt.setDate(3, usuario.getDataCadastro());
-			// executar a query
+			stmt.setString(2, usuario.getEmail());
+			stmt.setString(3, usuario.getSenha());
+			stmt.setDate(4, usuario.getDataCadastro());
 			stmt.execute();
-			// fechar a operação
 			stmt.close();
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 	}
 
-	// select all
 	public List<Usuario> selectAll() {
 		List<Usuario> usuarios = new ArrayList<Usuario>();
 		String sql = "select * from usuarios order by nome";
@@ -50,12 +42,13 @@ public class UsuarioDAO {
 
 			while (rs.next()) {
 				Usuario usuario = new Usuario();
-				usuario.setId(rs.getLong("id"));
+				usuario.setId(rs.getInt("id"));
 				usuario.setNome(rs.getString("nome"));
+				usuario.setEmail(rs.getString("email"));
 				usuario.setSenha(rs.getString("senha"));
-				usuario.setDataCadastro(rs.getDate("dataCadastro"));
-				usuarios.add(usuario);
+				usuario.setDataCadastro(rs.getDate("data"));
 
+				usuarios.add(usuario);
 			}
 			rs.close();
 			stmt.close();
@@ -63,59 +56,52 @@ public class UsuarioDAO {
 			e.printStackTrace();
 		}
 		return usuarios;
-
 	}
 
-	// selectById
-	public Usuario selectById(long id) {
+	public Usuario selectById(int id) {
 		Usuario usuario = null;
 		String sql = "select * from usuarios where id=?";
 		try {
 			PreparedStatement stmt = conexao.prepareStatement(sql);
-			stmt.setLong(1, id);
+			stmt.setInt(1, id);
 			ResultSet rs = stmt.executeQuery();
-
 			while (rs.next()) {
 				usuario = new Usuario();
-				usuario.setId(rs.getLong("id"));
+				usuario.setId(rs.getInt("id"));
 				usuario.setNome(rs.getString("nome"));
+				usuario.setEmail(rs.getString("email"));
 				usuario.setSenha(rs.getString("senha"));
-				usuario.setDataCadastro(rs.getDate("dataCadastro"));
-
+				usuario.setDataCadastro(rs.getDate("data"));
 			}
 			rs.close();
 			stmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 		return usuario;
-
 	}
 
-	// update
-	public void update(Usuario usuario) {
-		String sql = "update usuarios set nome=?, senha =? where id=?";
-		try {
-			PreparedStatement stmt = conexao.prepareStatement(sql);
-			stmt.setString(1, usuario.getNome());
-			stmt.setString(2, usuario.getSenha());
-			stmt.setLong(3, usuario.getId());
-			stmt.execute();
-			stmt.close();
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-	}
-
-	// delete
-	public void delete(long id) {
-		String sql = "delete from  usuarios where id=?";
+	public void delete(int id) {
+		String sql = "delete from usuarios where id=?";
 		try {
 			PreparedStatement stmt = conexao.prepareStatement(sql);
 			stmt.setLong(1, id);
+			stmt.execute();
+			stmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void update(Usuario usuario) {
+		String sql = "update usuarios set nome=?, email=?, senha=? where id=?";
+		try {
+			PreparedStatement stmt = conexao.prepareStatement(sql);
+			stmt.setString(1, usuario.getNome());
+			stmt.setString(2, usuario.getEmail());
+			stmt.setString(3, usuario.getSenha());
+			stmt.setLong(4, usuario.getId());
+
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {

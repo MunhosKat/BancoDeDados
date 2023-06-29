@@ -7,16 +7,17 @@ import br.com.fiap.util.CriptografiaUtils;
 public class Usuario {
 
 	private long id;
-	private String nome, senha;
+	private String nome, email, senha;
 	private Date dataCadastro;
 
 	public Usuario() {
 
 	}
 
-	public Usuario(String nome, String senha) {
+	public Usuario(String nome,String email, String senha) {
 
 		this.nome = nome;
+		this.email = email;
 		setSenha(senha);
 		this.dataCadastro = new Date(System.currentTimeMillis());
 
@@ -56,6 +57,14 @@ public class Usuario {
 
 	public void setDataCadastro(Date dataCadastro) {
 		this.dataCadastro = dataCadastro;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 }
