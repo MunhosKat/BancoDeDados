@@ -22,7 +22,7 @@ public class UsuarioFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JLabel labelNome, labelEmail, labelSenha;
 	private JTextField textoNome, textoEmail, textoSenha;
-	private JButton botaoSalvar, botaoEditar, botaoLimpar, botarApagar;
+	private JButton botaoSalvar, botaoEditar, botaoLimpar, botaoApagar, botaoSair;
 	private JTable tabela;
 	private DefaultTableModel modelo;
 	private UsuarioDAO dao = new UsuarioDAO();
@@ -81,19 +81,23 @@ public class UsuarioFrame extends JFrame {
 		tabela.setBounds(10, 185, 760, 300);
 		container.add(tabela);
 
-		botarApagar = new JButton("Excluir");
+		botaoApagar = new JButton("Excluir");
 		botaoEditar = new JButton("Alterar");
 
-		botarApagar.setBounds(10, 500, 80, 20);
+		botaoApagar.setBounds(10, 500, 80, 20);
 		botaoEditar.setBounds(100, 500, 80, 20);
+		
+		botaoSair = new JButton("Sair");
+		botaoSair.setBounds(690, 500, 80, 20);
 
-		container.add(botarApagar);
+		container.add(botaoSair);
 		container.add(botaoEditar);
-
+		container.add(botaoApagar);
+		
 		setSize(800, 600);
 		setVisible(true);
 		setLocationRelativeTo(null);
-
+		
 		botaoSalvar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -110,7 +114,7 @@ public class UsuarioFrame extends JFrame {
 			}
 		});
 
-		botarApagar.addActionListener(new ActionListener() {
+		botaoApagar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				deletar();
@@ -127,6 +131,14 @@ public class UsuarioFrame extends JFrame {
 				preencherTabela();
 			}
 		});
+		
+		botaoSair.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		
 	}
 
 	private void limparTabela() {
@@ -155,7 +167,7 @@ public class UsuarioFrame extends JFrame {
 			Integer id = (Integer) objetoDaLinha;
 			this.dao.delete(id);
 			modelo.removeRow(tabela.getSelectedRow());
-			JOptionPane.showMessageDialog(this, "Item excluído com sucesso!");
+			JOptionPane.showMessageDialog(this, "Item excluï¿½do com sucesso!");
 		} else {
 			JOptionPane.showMessageDialog(this, "Por favor, selecionar o ID");
 		}
@@ -179,7 +191,7 @@ public class UsuarioFrame extends JFrame {
 			JOptionPane.showMessageDialog(this, "Salvo com sucesso!");
 			this.limpar();
 		} else {
-			JOptionPane.showMessageDialog(this, "Nome e Descrição devem ser informados.");
+			JOptionPane.showMessageDialog(this, "Nome e Descriï¿½ï¿½o devem ser informados.");
 		}
 	}
 
@@ -188,4 +200,5 @@ public class UsuarioFrame extends JFrame {
 		this.textoEmail.setText("");
 		this.textoSenha.setText("");
 	}
+	
 }
